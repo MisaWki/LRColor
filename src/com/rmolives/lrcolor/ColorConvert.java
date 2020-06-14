@@ -2,18 +2,26 @@ package com.rmolives.lrcolor;
 
 public class ColorConvert {
     public static int hex2alpha(String hex) {
+        if (hex == null || hex.isEmpty())
+            return -1;
         return Math.round((float) (Integer.parseInt("0x" + hex, 16) / 255) * 100);
     }
 
     public static String rgb2hex(Rgb rgb) {
+        if (rgb == null)
+            return null;
         return "#" + convert(rgb.r) + convert(rgb.g) + convert(rgb.b);
     }
 
     public static String rgba2hex(Rgba rgba) {
+        if (rgba == null)
+            return null;
         return rgb2hex(rgba2rgb(rgba));
     }
 
     public static Rgb rgba2rgb(Rgba rgba) {
+        if (rgba == null)
+            return null;
         int a = rgba.a / 100;
         return new Rgb(
                 (1 - a) * 255 + a * rgba.r,
@@ -23,14 +31,20 @@ public class ColorConvert {
     }
 
     public static Hsl hex2hsl(String hex) {
+        if (hex == null || hex.isEmpty())
+            return null;
         return hsv2hsl(rgb2hsv(hex2rgb(hex)));
     }
 
     public static Rgb hsl2rgb(Hsl hsl) {
+        if (hsl == null)
+            return null;
         return hsv2rgb(hsl2hsv(hsl));
     }
 
     public static Hsl hsv2hsl(Hsv hsv) {
+        if (hsv == null)
+            return null;
         int h = ((200 - hsv.s) * hsv.v) / 100;
         return new Hsl(
                 h,
@@ -40,6 +54,8 @@ public class ColorConvert {
     }
 
     public static Hsv hsl2hsv(Hsl hsl) {
+        if (hsl == null)
+            return null;
         int s = hsl.s * ((hsl.l < 50 ? hsl.l : 100 - hsl.l) / 100);
         return new Hsv(hsl.h, ((2 * s) / (hsl.l + s)) * 100, hsl.l + s);
     }
@@ -68,6 +84,8 @@ public class ColorConvert {
     }
 
     public static Rgb hsv2rgb(Hsv hsv) {
+        if (hsv == null)
+            return null;
         int s = hsv.s / 100;
         int v = hsv.v / 100;
         int c = v * s;
@@ -91,6 +109,8 @@ public class ColorConvert {
     }
 
     public static Rgb hex2rgb(String hex) {
+        if (hex == null || hex.isEmpty())
+            return null;
         if (hex.startsWith("#"))
             hex = hex.substring(1);
         if (hex.length() == 3)
